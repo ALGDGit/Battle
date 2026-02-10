@@ -1,0 +1,17 @@
+[
+  {
+    "id": "alpha",
+    "name": "Alpha",
+    "description": "Balanced fighter with steady stats."
+  },
+  {
+    "id": "bravo",
+    "name": "Bravo",
+    "description": "Hard hitter with slower recovery."
+  },
+  {
+    "id": "charlie",
+    "name": "Charlie",
+    "description": "Fast mover with lighter attacks."
+  }
+]

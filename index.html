@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Web Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="menu" id="main-menu">
+      <h1 class="title">Web Game</h1>
+      <div class="menu-actions">
+        <button class="menu-button" id="single-player">Single Player</button>
+        <button class="menu-button" id="exit">Exit</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="character-menu">
+      <h1 class="title">Choose Fighters</h1>
+      <div class="picker">
+        <section class="picker-panel">
+          <h2 class="picker-title">Your Character</h2>
+          <div class="picker-list" id="player-list"></div>
+        </section>
+        <section class="picker-panel">
+          <h2 class="picker-title">Opponent</h2>
+          <div class="picker-list" id="opponent-list"></div>
+        </section>
+      </div>
+      <div class="menu-actions">
+        <button class="menu-button" id="start-game" disabled>Start</button>
+        <button class="menu-button secondary" id="back">Back</button>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
