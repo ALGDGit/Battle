@@ -10,26 +10,259 @@
     <main class="menu" id="main-menu">
       <h1 class="title">Web Game</h1>
       <div class="menu-actions">
-        <button class="menu-button" id="single-player">Single Player</button>
+        <button class="menu-button" id="single-player">History Mode</button>
         <button class="menu-button" id="exit">Exit</button>
       </div>
     </main>
 
     <main class="menu hidden" id="character-menu">
-      <h1 class="title">Choose Fighters</h1>
-      <div class="picker">
-        <section class="picker-panel">
-          <h2 class="picker-title">Your Character</h2>
-          <div class="picker-list" id="player-list"></div>
-        </section>
-        <section class="picker-panel">
-          <h2 class="picker-title">Opponent</h2>
-          <div class="picker-list" id="opponent-list"></div>
-        </section>
+      <div class="select-screen">
+        <div class="select-header">
+          <h1 class="title">Choose Your Baby</h1>
+          <p class="select-subtitle">Pick one of four random Baby I partners.</p>
+        </div>
+        <div class="select-grid" id="player-list"></div>
+        <div class="menu-actions">
+          <button class="menu-button" id="start-game" disabled>Start</button>
+          <button class="menu-button secondary" id="back">Back</button>
+        </div>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="action-menu">
+      <h1 class="title">Caretaker</h1>
+      <div class="caretaker-header">
+        <div class="character-sprite-frame" id="caretaker-sprite"></div>
+        <div class="caretaker-info">
+          <h2 class="battle-name" id="caretaker-name">---</h2>
+          <p class="battle-hp" id="caretaker-stage">Stage: ---</p>
+          <img
+            id="caretaker-type-icon"
+            class="type-icon"
+            alt="Type icon"
+          />
+          <p class="battle-hp" id="caretaker-hp">HP: 0</p>
+        </div>
+      </div>
+      <p class="battle-hp" id="weight-counter">Weight: 0</p>
+      <p class="battle-hp" id="training-counter">Training: 0/4</p>
+      <p class="battle-hp" id="consumable-status">Consumable: None</p>
+      <p class="battle-hp" id="win-rate">Win Rate: 0%</p>
+      <div class="menu-actions">
+        <button class="menu-button" id="feed">Feed</button>
+        <button class="menu-button" id="train">Train</button>
+        <button class="menu-button" id="battle">Battle</button>
+        <button class="menu-button hidden" id="final-challenge">Final Challenge</button>
       </div>
       <div class="menu-actions">
-        <button class="menu-button" id="start-game" disabled>Start</button>
-        <button class="menu-button secondary" id="back">Back</button>
+        <button class="menu-button secondary" id="action-back">Back</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="feed-menu">
+      <h1 class="title">Feed</h1>
+      <div class="select-screen">
+        <div class="feed-visual">
+          <div class="character-sprite-frame" id="feed-sprite"></div>
+          <div class="feed-food">
+            <img
+              src="data/ui/food_meat.svg"
+              alt="Meat"
+              class="food-sprite"
+              id="feed-food-img"
+            />
+          </div>
+        </div>
+        <div class="select-grid">
+          <button class="character-card" id="feed-meat">
+            <h3 class="character-name">Meat</h3>
+            <p class="character-meta">Infinite supply</p>
+          </button>
+          <button class="character-card hidden item-card" id="feed-mushroom">
+            <div class="item-info">
+              <h3 class="character-name">Mushroom</h3>
+              <p class="character-meta" id="mushroom-count">x0</p>
+            </div>
+            <img
+              src="data/ui/food_mushroom.svg"
+              alt="Mushroom"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="feed-pepper">
+            <div class="item-info">
+              <h3 class="character-name">Pepper</h3>
+              <p class="character-meta" id="pepper-count">x0</p>
+            </div>
+            <img
+              src="data/ui/food_pepper.svg"
+              alt="Pepper"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="feed-blue-apple">
+            <div class="item-info">
+              <h3 class="character-name">Blue Apple</h3>
+              <p class="character-meta" id="blue-apple-count">x0</p>
+            </div>
+            <img
+              src="data/ui/food_blue_apple.svg"
+              alt="Blue Apple"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="feed-medicine">
+            <div class="item-info">
+              <h3 class="character-name">Medicine</h3>
+              <p class="character-meta" id="medicine-count">x0</p>
+            </div>
+            <img
+              src="data/ui/food_medicine.svg"
+              alt="Medicine"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="feed-yellow-pear">
+            <div class="item-info">
+              <h3 class="character-name">Yellow Pear</h3>
+              <p class="character-meta" id="yellow-pear-count">x0</p>
+            </div>
+            <img
+              src="data/ui/food_yellow_pear.svg"
+              alt="Yellow Pear"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="feed-storm-cloud">
+            <div class="item-info">
+              <h3 class="character-name">Storm Cloud</h3>
+              <p class="character-meta" id="storm-cloud-count">x0</p>
+            </div>
+            <img
+              src="data/ui/item_storm_cloud.svg"
+              alt="Storm Cloud"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="feed-poison-vial">
+            <div class="item-info">
+              <h3 class="character-name">Poison Vial</h3>
+              <p class="character-meta" id="poison-vial-count">x0</p>
+            </div>
+            <img
+              src="data/ui/item_poison_vial.svg"
+              alt="Poison Vial"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="feed-beer-bottle">
+            <div class="item-info">
+              <h3 class="character-name">Beer Bottle</h3>
+              <p class="character-meta" id="beer-bottle-count">x0</p>
+            </div>
+            <img
+              src="data/ui/item_beer_bottle.svg"
+              alt="Beer Bottle"
+              class="food-sprite item-icon"
+            />
+          </button>
+        </div>
+      </div>
+      <div class="menu-actions">
+        <button class="menu-button secondary" id="feed-back">Back</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="train-menu">
+      <h1 class="title">Training</h1>
+      <div class="train-panel">
+        <div class="train-visual">
+          <div class="character-sprite-frame face-right" id="train-sprite"></div>
+          <div class="train-bag" id="train-bag">
+            <img
+              src="data/ui/punching_bag.svg"
+              alt="Punching bag"
+              class="bag-sprite"
+            />
+          </div>
+        </div>
+        <div class="train-bar">
+          <div class="train-fill" id="train-fill"></div>
+        </div>
+        <p class="character-meta" id="train-status">
+          Press Space when the bar is between 80% and 100%.
+        </p>
+      </div>
+      <div class="menu-actions">
+        <button class="menu-button" id="train-retry">Retry</button>
+        <button class="menu-button secondary" id="train-back">Back</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="evolution-screen">
+      <h1 class="title">Evolution</h1>
+      <div class="evolution-panel">
+        <div class="character-sprite-frame" id="evolution-old"></div>
+        <div class="character-sprite-frame" id="evolution-new"></div>
+      </div>
+      <p class="battle-hp" id="evolution-message"></p>
+      <div class="menu-actions">
+        <button class="menu-button" id="evolution-continue">Continue</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="gameover-screen">
+      <h1 class="title">Game Over</h1>
+      <div class="end-panel">
+        <div class="character-sprite-frame" id="gameover-sprite"></div>
+      </div>
+      <div class="menu-actions">
+        <button class="menu-button" id="gameover-continue">Main Menu</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="congrats-screen">
+      <h1 class="title">Congratulations!</h1>
+      <div class="end-panel">
+        <div class="character-sprite-frame" id="congrats-sprite"></div>
+      </div>
+      <div class="menu-actions">
+        <button class="menu-button" id="congrats-continue">Main Menu</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="battle-screen">
+      <h1 class="title">Battle</h1>
+      <div class="battle" id="battle-field">
+        <div class="battle-fighter">
+          <div class="battle-sprite-slot" id="battle-player-sprite"></div>
+          <div class="status-icons" id="player-status-icons">
+            <img src="data/ui/status_paralyzed.svg" alt="Paralyzed" class="status-icon" id="player-status-paralyzed" />
+            <img src="data/ui/status_poisoned.svg" alt="Poisoned" class="status-icon" id="player-status-poisoned" />
+            <img src="data/ui/status_confused.svg" alt="Confused" class="status-icon" id="player-status-confused" />
+          </div>
+          <div class="battle-info">
+            <h2 class="battle-name" id="battle-player-name">Player</h2>
+            <p class="battle-hp" id="battle-player-hp">HP: 0</p>
+          </div>
+        </div>
+        <div class="battle-vs">VS</div>
+        <div class="battle-fighter">
+          <div class="battle-sprite-slot" id="battle-opponent-sprite"></div>
+          <div class="status-icons" id="opponent-status-icons">
+            <img src="data/ui/status_paralyzed.svg" alt="Paralyzed" class="status-icon" id="opponent-status-paralyzed" />
+            <img src="data/ui/status_poisoned.svg" alt="Poisoned" class="status-icon" id="opponent-status-poisoned" />
+            <img src="data/ui/status_confused.svg" alt="Confused" class="status-icon" id="opponent-status-confused" />
+          </div>
+          <div class="battle-info">
+            <h2 class="battle-name" id="battle-opponent-name">Opponent</h2>
+            <p class="battle-hp" id="battle-opponent-hp">HP: 0</p>
+          </div>
+        </div>
+      </div>
+      <div class="battle-log" id="battle-log"></div>
+      <div class="menu-actions">
+        <button class="menu-button secondary" id="battle-back">Back to Menu</button>
       </div>
     </main>
     <script src="script.js"></script>
