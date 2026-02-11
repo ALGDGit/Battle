@@ -624,7 +624,10 @@ function updateBattleBackground() {
   if (!battleField || !state.player) {
     return;
   }
-  const stage = state.player.stage || "Child";
+  let stage = state.player.stage || "Child";
+  if (state.finalChallenge && state.opponent?.stage) {
+    stage = state.opponent.stage;
+  }
   const mapping = {
     "Baby I": "bg_baby_i.svg",
     "Baby II": "bg_baby_ii.svg",
