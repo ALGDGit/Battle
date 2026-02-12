@@ -4,22 +4,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Web Game</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="src/styles/main.css" />
   </head>
   <body>
     <main class="menu" id="main-menu">
       <h1 class="title">Web Game</h1>
       <div class="menu-actions">
         <button class="menu-button" id="single-player">History Mode</button>
+        <button class="menu-button" id="arena-mode">Arena Mode</button>
         <button class="menu-button" id="exit">Exit</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="arena-menu">
+      <div class="select-screen">
+        <div class="select-header">
+          <h1 class="title">Arena Mode</h1>
+          <p class="select-subtitle">Pick your fighter and opponent from characters played in History Mode.</p>
+        </div>
+        <div class="arena-columns">
+          <section class="arena-column">
+            <h2 class="battle-name">Your Fighter</h2>
+            <div class="select-grid" id="arena-player-list"></div>
+          </section>
+          <section class="arena-column">
+            <h2 class="battle-name">Opponent</h2>
+            <div class="select-grid" id="arena-opponent-list"></div>
+          </section>
+        </div>
+        <div class="menu-actions">
+          <button class="menu-button" id="arena-start" disabled>Start Arena Battle</button>
+          <button class="menu-button secondary" id="arena-back">Back</button>
+        </div>
       </div>
     </main>
 
     <main class="menu hidden" id="character-menu">
       <div class="select-screen">
         <div class="select-header">
-          <h1 class="title">Choose Your Baby</h1>
-          <p class="select-subtitle">Pick one of four random Baby I partners.</p>
+          <h1 class="title">Choose Your Egg</h1>
+          <p class="select-subtitle">Pick an egg to hatch your Baby I partner.</p>
         </div>
         <div class="select-grid" id="player-list"></div>
         <div class="menu-actions">
@@ -166,6 +190,76 @@
               class="food-sprite item-icon"
             />
           </button>
+          <button class="character-card hidden item-card" id="feed-focus-lens">
+            <div class="item-info">
+              <h3 class="character-name">Focus Lens</h3>
+              <p class="character-meta" id="focus-lens-count">x0</p>
+            </div>
+            <img src="data/ui/item_focus_lens.svg" alt="Focus Lens" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-aegis-charm">
+            <div class="item-info">
+              <h3 class="character-name">Aegis Charm</h3>
+              <p class="character-meta" id="aegis-charm-count">x0</p>
+            </div>
+            <img src="data/ui/item_aegis_charm.svg" alt="Aegis Charm" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-adrenal-seed">
+            <div class="item-info">
+              <h3 class="character-name">Adrenal Seed</h3>
+              <p class="character-meta" id="adrenal-seed-count">x0</p>
+            </div>
+            <img src="data/ui/item_adrenal_seed.svg" alt="Adrenal Seed" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-echo-shell">
+            <div class="item-info">
+              <h3 class="character-name">Echo Shell</h3>
+              <p class="character-meta" id="echo-shell-count">x0</p>
+            </div>
+            <img src="data/ui/item_echo_shell.svg" alt="Echo Shell" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-null-powder">
+            <div class="item-info">
+              <h3 class="character-name">Null Powder</h3>
+              <p class="character-meta" id="null-powder-count">x0</p>
+            </div>
+            <img src="data/ui/item_null_powder.svg" alt="Null Powder" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-weighted-anklet">
+            <div class="item-info">
+              <h3 class="character-name">Weighted Anklet</h3>
+              <p class="character-meta" id="weighted-anklet-count">x0</p>
+            </div>
+            <img src="data/ui/item_weighted_anklet.svg" alt="Weighted Anklet" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-ration-pack">
+            <div class="item-info">
+              <h3 class="character-name">Ration Pack</h3>
+              <p class="character-meta" id="ration-pack-count">x0</p>
+            </div>
+            <img src="data/ui/item_ration_pack.svg" alt="Ration Pack" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-mutation-core">
+            <div class="item-info">
+              <h3 class="character-name">Mutation Core</h3>
+              <p class="character-meta" id="mutation-core-count">x0</p>
+            </div>
+            <img src="data/ui/item_mutation_core.svg" alt="Mutation Core" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-lucky-token">
+            <div class="item-info">
+              <h3 class="character-name">Lucky Token</h3>
+              <p class="character-meta" id="lucky-token-count">x0</p>
+            </div>
+            <img src="data/ui/item_lucky_token.svg" alt="Lucky Token" class="food-sprite item-icon" />
+          </button>
+          <button class="character-card hidden item-card" id="feed-last-stand-emblem">
+            <div class="item-info">
+              <h3 class="character-name">Last Stand Emblem</h3>
+              <p class="character-meta" id="last-stand-emblem-count">x0</p>
+            </div>
+            <img src="data/ui/item_last_stand_emblem.svg" alt="Last Stand Emblem" class="food-sprite item-icon" />
+          </button>
         </div>
       </div>
       <div class="menu-actions">
@@ -265,6 +359,34 @@
         <button class="menu-button secondary" id="battle-back">Back to Menu</button>
       </div>
     </main>
-    <script src="script.js"></script>
+
+    <div class="modal-overlay hidden" id="final-challenge-modal" role="dialog" aria-modal="true" aria-labelledby="final-challenge-title">
+      <div class="modal-card final-challenge-popup">
+        <p class="modal-eyebrow">Warning</p>
+        <h2 class="modal-title" id="final-challenge-title">Final Challenge</h2>
+        <p class="modal-message">
+          This battle ends your run. Win to beat the game, lose to get Game Over.
+        </p>
+        <div class="menu-actions modal-actions">
+          <button class="menu-button" id="final-challenge-confirm">Start Final Challenge</button>
+          <button class="menu-button secondary" id="final-challenge-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="action-back-modal" role="dialog" aria-modal="true" aria-labelledby="action-back-title">
+      <div class="modal-card final-challenge-popup">
+        <p class="modal-eyebrow">Warning</p>
+        <h2 class="modal-title" id="action-back-title">Leave Caretaker</h2>
+        <p class="modal-message">
+          Going back to the main menu resets your current run progress. Continue?
+        </p>
+        <div class="menu-actions modal-actions">
+          <button class="menu-button" id="action-back-confirm">Yes, go back</button>
+          <button class="menu-button secondary" id="action-back-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="src/js/game.js"></script>
   </body>
 </html>
