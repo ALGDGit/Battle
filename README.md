@@ -1,88 +1,78 @@
 # Battle
 
-Browser game project organized as a static web app.
+Juego estático de navegador. **No hace falta Python ni npm en tu máquina.**
 
-## How to launch
+- Repositorio: [https://github.com/ALGDGit/Battle](https://github.com/ALGDGit/Battle)
+- Online: [https://algdgit.github.io/Battle/](https://algdgit.github.io/Battle/)
 
-Install dependencies and build TypeScript:
+## Probar en local
 
-```bash
-npm install
-npm run build
-```
+No abras `index.html` a doble clic (`file://` rompe el juego).
 
-Start a local web server (required because the game loads JSON/sprites with `fetch`):
-
-```bash
-python3 -m http.server 8080
-```
-
-Open:
+1. Haz doble clic en `start.bat` (o ejecuta `start.ps1` en PowerShell).
+2. Se abre solo el navegador en:
 
 ```text
-http://localhost:8080
+http://127.0.0.1:8080/
 ```
 
-## Game summary
+3. Para parar el servidor, cierra la ventana negra de PowerShell.
 
-The game currently has two main modes:
+Eso usa solo PowerShell de Windows: sin instalar nada.
 
-- `History Mode`
-- `Arena Mode`
+## Jugar online (GitHub Pages)
 
-### History Mode
+Abre:
 
-- You begin by selecting from unlocked eggs.
-- Eggs hatch into assigned `Baby I` characters.
-- Winning the Final Challenge unlocks new eggs over time.
-- You manage your character through:
-  - Feed
-  - Train
-  - Battle
-  - Evolution progression across stages (`Baby I` to `Ultimate`)
-- Consumable items and status effects are part of battle strategy.
+```text
+https://algdgit.github.io/Battle/
+```
 
-### Arena Mode
+Si Pages aún no está activo:
 
-- You pick both your fighter and your opponent directly.
-- Arena picks are limited to characters you have already played in History Mode.
-- Arena is for direct battles; History progression systems (like evolution flow) are separate.
+1. En [Settings → Pages](https://github.com/ALGDGit/Battle/settings/pages): **Source → GitHub Actions**
+2. Haz push a `main` o lanza el workflow [Deploy to GitHub Pages](https://github.com/ALGDGit/Battle/actions/workflows/pages.yml) a mano
+3. Espera a que el deploy termine y abre la URL de arriba
 
-### Battle and progression highlights
+## Compilar en GitHub (sin instalar nada local)
 
-- Standard attacks are always available.
-- Special attacks:
-  - Only available from `Child` stage onward.
-  - Trigger 20% of turns (instead of standard attack).
-  - Element rules:
-    - `Vaccine`: deals 1, heals 1, 50% paralyze chance.
-    - `Data`: deals 2, 50% confuse chance.
-    - `Virus`: 50% poison chance; critical special hits deal 4.
-- Item drops:
-  - 20% chance per completed battle to drop at least one item.
-- Evolution:
-  - If evolution fails after a win, the next evolution chance gets +1% (resets after a successful evolution).
+El workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml):
 
-## Project structure
+- instala dependencias **en los servidores de GitHub**
+- ejecuta `npm run build` allí
+- publica `index.html`, `src/` y `data/` en GitHub Pages
+
+En local no corres `npm` ni `python`.
+
+## Resumen del juego
+
+Dos modos:
+
+- **History Mode** — solo el huevo Beta → cuidar (feed/train/battle) → evolucionar → Final Challenge
+- **Arena Mode** — eliges luchador y rival entre personajes ya jugados en History
+
+### Combate y progresión
+
+- Ataque normal siempre disponible
+- Especial desde etapa `Child` (20% de los turnos): Vaccine / Data / Virus con efectos distintos
+- 20% de drop de ítem tras una batalla
+- Si falla la evolución tras ganar, +1% a la siguiente tirada
+
+## Estructura
 
 ```text
 .
 ├── index.html
+├── start.bat / start.ps1   # lanzar en local sin instalar nada
 ├── src
-│   ├── js
-│   │   ├── constants.js
-│   │   ├── dom.js
-│   │   ├── game.js
-│   │   └── state.js
-│   ├── ts
-│   │   ├── constants.ts
-│   │   ├── dom.ts
-│   │   ├── game.ts
-│   │   └── state.ts
-│   └── styles
-│       └── main.css
-└── data
-    ├── characters.json
-    ├── sprites/
-    └── ui/
+│   ├── js/          # runtime del navegador (generado)
+│   ├── ts/          # fuente TypeScript
+│   └── styles/
+├── data
+│   ├── characters.json
+│   ├── sprites/
+│   └── ui/
+└── .github/workflows/pages.yml
 ```
+
+El navegador solo usa HTML, CSS, JS y los assets de `data/`.

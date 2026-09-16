@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Web Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="src/styles/main.css" />
   </head>
   <body>
@@ -11,7 +17,8 @@
       <h1 class="title">Web Game</h1>
       <div class="menu-actions">
         <button class="menu-button" id="single-player">History Mode</button>
-        <button class="menu-button" id="arena-mode">Arena Mode</button>
+        <button class="menu-button" id="arena-mode" disabled title="Coming soon!">Arena Mode — Coming soon!</button>
+        <button class="menu-button" id="vpet-upload" disabled title="Coming soon!">VPET upload — Coming soon!</button>
         <button class="menu-button" id="exit">Exit</button>
       </div>
     </main>
@@ -43,7 +50,7 @@
       <div class="select-screen">
         <div class="select-header">
           <h1 class="title">Choose Your Egg</h1>
-          <p class="select-subtitle">Pick an egg to hatch your Baby I partner.</p>
+          <p class="select-subtitle">Hatch an unlocked egg into your Baby I partner. Locked eggs show as ???? until you unlock them.</p>
         </div>
         <div class="select-grid" id="player-list"></div>
         <div class="menu-actions">
@@ -53,10 +60,81 @@
       </div>
     </main>
 
+    <main class="menu hidden" id="hub-menu">
+      <div class="select-screen">
+        <div class="select-header">
+          <h1 class="title">Town</h1>
+          <p class="select-subtitle">Go home to care for your Digimon, or follow the path to explore.</p>
+        </div>
+        <div class="hub-map">
+          <button type="button" class="hub-spot" id="hub-house" aria-label="House">
+            <img class="hub-image" src="data/ui/hub_house.png" alt="House" width="160" height="160" />
+            <span class="hub-label">House</span>
+          </button>
+          <button type="button" class="hub-spot" id="hub-path" aria-label="Battle path">
+            <img class="hub-image" src="data/ui/hub_path_sign.png" alt="Path sign" width="160" height="160" />
+            <span class="hub-label">Path</span>
+          </button>
+        </div>
+        <div class="menu-actions">
+          <button class="menu-button hidden" id="hub-final-challenge">Final Challenge</button>
+          <button class="menu-button secondary" id="hub-back">Back</button>
+        </div>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="zone-menu">
+      <div class="select-screen">
+        <div class="select-header">
+          <h1 class="title">Choose a Zone</h1>
+          <p class="select-subtitle">Click a zone to enter, or the info icon to review discoveries.</p>
+        </div>
+        <div class="hub-map zone-map" id="zone-map" aria-label="Zone map"></div>
+        <div class="menu-actions">
+          <button class="menu-button secondary" id="zone-back">Back</button>
+        </div>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="zone-info-menu">
+      <div class="select-screen">
+        <div class="select-header">
+          <h1 class="title" id="zone-info-title">Zone Info</h1>
+          <p class="select-subtitle" id="zone-info-subtitle">
+            Only creatures and events you have already seen are revealed.
+          </p>
+        </div>
+        <section class="zone-info-section">
+          <h2 class="zone-info-heading" id="zone-info-encounters-heading">Encounters</h2>
+          <div class="select-grid zone-info-grid" id="zone-info-encounters"></div>
+        </section>
+        <section class="zone-info-section">
+          <h2 class="zone-info-heading" id="zone-info-events-heading">Events</h2>
+          <div class="select-grid zone-info-grid" id="zone-info-events"></div>
+        </section>
+        <section class="zone-info-section">
+          <h2 class="zone-info-heading" id="zone-info-bosses-heading">Bosses</h2>
+          <div class="select-grid zone-info-grid" id="zone-info-bosses"></div>
+        </section>
+        <div class="menu-actions">
+          <button class="menu-button secondary" id="zone-info-back">Back</button>
+        </div>
+      </div>
+    </main>
+
     <main class="menu hidden" id="action-menu">
-      <h1 class="title">Caretaker</h1>
+      <h1 class="title">Home</h1>
       <div class="caretaker-header">
-        <div class="character-sprite-frame" id="caretaker-sprite"></div>
+        <div class="home-room" aria-hidden="false">
+          <img
+            class="home-room-bg"
+            src="data/ui/home_room.png"
+            alt="Home room"
+            width="480"
+            height="360"
+          />
+          <div class="character-sprite-frame home-room-sprite" id="caretaker-sprite"></div>
+        </div>
         <div class="caretaker-info">
           <h2 class="battle-name" id="caretaker-name">---</h2>
           <p class="battle-hp" id="caretaker-stage">Stage: ---</p>
@@ -65,18 +143,29 @@
             class="type-icon"
             alt="Type icon"
           />
-          <p class="battle-hp" id="caretaker-hp">HP: 0</p>
         </div>
       </div>
+      <div class="lives-row" id="lives-row" aria-label="Lives">
+        <img class="life-heart" src="data/ui/heart_full.png" alt="Life" width="16" height="16" />
+        <img class="life-heart" src="data/ui/heart_full.png" alt="Life" width="16" height="16" />
+        <img class="life-heart" src="data/ui/heart_full.png" alt="Life" width="16" height="16" />
+      </div>
       <p class="battle-hp" id="weight-counter">Weight: 0</p>
-      <p class="battle-hp" id="training-counter">Training: 0/4</p>
-      <p class="battle-hp" id="consumable-status">Consumable: None</p>
+      <p class="battle-hp" id="discipline-counter">Discipline: Neutral</p>
+      <p class="battle-hp" id="happiness-counter">Happiness: Normal</p>
+      <p class="battle-hp" id="alignment-counter">Alignment: Normal</p>
+      <p class="battle-hp" id="attr-hp">HP: 0</p>
+      <p class="battle-hp" id="attr-attack">Attack: 0</p>
+      <p class="battle-hp" id="attr-defense">Defense: 0</p>
+      <p class="battle-hp" id="attr-speed">Speed: 0</p>
+      <p class="battle-hp" id="attr-intelligence">Intelligence: 0</p>
+      <p class="battle-hp" id="equipment-status">Equipment: None</p>
       <p class="battle-hp" id="win-rate">Win Rate: 0%</p>
       <div class="menu-actions">
-        <button class="menu-button" id="feed">Feed</button>
+        <button class="menu-button" id="feed">Usable Items</button>
         <button class="menu-button" id="train">Train</button>
-        <button class="menu-button" id="battle">Battle</button>
-        <button class="menu-button hidden" id="final-challenge">Final Challenge</button>
+        <button class="menu-button" id="equipment">Equipment</button>
+        <button class="menu-button" id="key-items">Key Items</button>
       </div>
       <div class="menu-actions">
         <button class="menu-button secondary" id="action-back">Back</button>
@@ -84,181 +173,28 @@
     </main>
 
     <main class="menu hidden" id="feed-menu">
-      <h1 class="title">Feed</h1>
+      <h1 class="title">Usable Items</h1>
+      <p class="item-hover-desc" id="feed-item-desc">Hover an item to see its effect.</p>
+      <div class="dex-filters" id="feed-filters"></div>
       <div class="select-screen">
         <div class="feed-visual">
           <div class="character-sprite-frame" id="feed-sprite"></div>
           <div class="feed-food">
             <img
-              src="data/ui/food_meat.svg"
+              src="data/ui/food_meat.png"
               alt="Meat"
               class="food-sprite"
               id="feed-food-img"
             />
           </div>
         </div>
-        <div class="select-grid">
+        <div class="select-grid" id="feed-item-list">
           <button class="character-card" id="feed-meat">
-            <h3 class="character-name">Meat</h3>
-            <p class="character-meta">Infinite supply</p>
-          </button>
-          <button class="character-card hidden item-card" id="feed-mushroom">
             <div class="item-info">
-              <h3 class="character-name">Mushroom</h3>
-              <p class="character-meta" id="mushroom-count">x0</p>
+              <h3 class="character-name">Meat</h3>
+              <p class="character-meta" id="meat-count">x5</p>
             </div>
-            <img
-              src="data/ui/food_mushroom.svg"
-              alt="Mushroom"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-pepper">
-            <div class="item-info">
-              <h3 class="character-name">Pepper</h3>
-              <p class="character-meta" id="pepper-count">x0</p>
-            </div>
-            <img
-              src="data/ui/food_pepper.svg"
-              alt="Pepper"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-blue-apple">
-            <div class="item-info">
-              <h3 class="character-name">Blue Apple</h3>
-              <p class="character-meta" id="blue-apple-count">x0</p>
-            </div>
-            <img
-              src="data/ui/food_blue_apple.svg"
-              alt="Blue Apple"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-medicine">
-            <div class="item-info">
-              <h3 class="character-name">Medicine</h3>
-              <p class="character-meta" id="medicine-count">x0</p>
-            </div>
-            <img
-              src="data/ui/food_medicine.svg"
-              alt="Medicine"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-yellow-pear">
-            <div class="item-info">
-              <h3 class="character-name">Yellow Pear</h3>
-              <p class="character-meta" id="yellow-pear-count">x0</p>
-            </div>
-            <img
-              src="data/ui/food_yellow_pear.svg"
-              alt="Yellow Pear"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-storm-cloud">
-            <div class="item-info">
-              <h3 class="character-name">Storm Cloud</h3>
-              <p class="character-meta" id="storm-cloud-count">x0</p>
-            </div>
-            <img
-              src="data/ui/item_storm_cloud.svg"
-              alt="Storm Cloud"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-poison-vial">
-            <div class="item-info">
-              <h3 class="character-name">Poison Vial</h3>
-              <p class="character-meta" id="poison-vial-count">x0</p>
-            </div>
-            <img
-              src="data/ui/item_poison_vial.svg"
-              alt="Poison Vial"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-beer-bottle">
-            <div class="item-info">
-              <h3 class="character-name">Beer Bottle</h3>
-              <p class="character-meta" id="beer-bottle-count">x0</p>
-            </div>
-            <img
-              src="data/ui/item_beer_bottle.svg"
-              alt="Beer Bottle"
-              class="food-sprite item-icon"
-            />
-          </button>
-          <button class="character-card hidden item-card" id="feed-focus-lens">
-            <div class="item-info">
-              <h3 class="character-name">Focus Lens</h3>
-              <p class="character-meta" id="focus-lens-count">x0</p>
-            </div>
-            <img src="data/ui/item_focus_lens.svg" alt="Focus Lens" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-aegis-charm">
-            <div class="item-info">
-              <h3 class="character-name">Aegis Charm</h3>
-              <p class="character-meta" id="aegis-charm-count">x0</p>
-            </div>
-            <img src="data/ui/item_aegis_charm.svg" alt="Aegis Charm" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-adrenal-seed">
-            <div class="item-info">
-              <h3 class="character-name">Adrenal Seed</h3>
-              <p class="character-meta" id="adrenal-seed-count">x0</p>
-            </div>
-            <img src="data/ui/item_adrenal_seed.svg" alt="Adrenal Seed" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-echo-shell">
-            <div class="item-info">
-              <h3 class="character-name">Echo Shell</h3>
-              <p class="character-meta" id="echo-shell-count">x0</p>
-            </div>
-            <img src="data/ui/item_echo_shell.svg" alt="Echo Shell" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-null-powder">
-            <div class="item-info">
-              <h3 class="character-name">Null Powder</h3>
-              <p class="character-meta" id="null-powder-count">x0</p>
-            </div>
-            <img src="data/ui/item_null_powder.svg" alt="Null Powder" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-weighted-anklet">
-            <div class="item-info">
-              <h3 class="character-name">Weighted Anklet</h3>
-              <p class="character-meta" id="weighted-anklet-count">x0</p>
-            </div>
-            <img src="data/ui/item_weighted_anklet.svg" alt="Weighted Anklet" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-ration-pack">
-            <div class="item-info">
-              <h3 class="character-name">Ration Pack</h3>
-              <p class="character-meta" id="ration-pack-count">x0</p>
-            </div>
-            <img src="data/ui/item_ration_pack.svg" alt="Ration Pack" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-mutation-core">
-            <div class="item-info">
-              <h3 class="character-name">Mutation Core</h3>
-              <p class="character-meta" id="mutation-core-count">x0</p>
-            </div>
-            <img src="data/ui/item_mutation_core.svg" alt="Mutation Core" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-lucky-token">
-            <div class="item-info">
-              <h3 class="character-name">Lucky Token</h3>
-              <p class="character-meta" id="lucky-token-count">x0</p>
-            </div>
-            <img src="data/ui/item_lucky_token.svg" alt="Lucky Token" class="food-sprite item-icon" />
-          </button>
-          <button class="character-card hidden item-card" id="feed-last-stand-emblem">
-            <div class="item-info">
-              <h3 class="character-name">Last Stand Emblem</h3>
-              <p class="character-meta" id="last-stand-emblem-count">x0</p>
-            </div>
-            <img src="data/ui/item_last_stand_emblem.svg" alt="Last Stand Emblem" class="food-sprite item-icon" />
+            <img src="data/ui/food_meat.png" alt="Meat" class="food-sprite item-icon" />
           </button>
         </div>
       </div>
@@ -267,20 +203,484 @@
       </div>
     </main>
 
-    <main class="menu hidden" id="train-menu">
+    <main class="menu hidden" id="equipment-menu">
+      <h1 class="title">Equipment</h1>
+      <p class="item-hover-desc" id="equipment-item-desc">Hover an item to see its effect.</p>
+      <div class="select-screen">
+        <div class="feed-visual">
+          <div class="character-sprite-frame" id="equipment-sprite"></div>
+          <div class="feed-food">
+            <img
+              src="data/ui/equip_wooden_sword.png"
+              alt="Equipment"
+              class="food-sprite"
+              id="equipment-preview-img"
+            />
+          </div>
+        </div>
+        <div class="select-grid" id="equipment-item-list">
+          <button class="character-card hidden item-card" id="equip-wooden-sword" data-equipment-key="woodenSword">
+            <div class="item-info">
+              <h3 class="character-name">Wood Sword</h3>
+              <p class="character-meta equipment-state" id="wooden-sword-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_wooden_sword.png"
+              alt="Wood Sword"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-carapace-armor" data-equipment-key="carapaceArmor">
+            <div class="item-info">
+              <h3 class="character-name">Carapace Armor</h3>
+              <p class="character-meta equipment-state" id="carapace-armor-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_carapace_armor.png"
+              alt="Carapace Armor"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-cyberparts" data-equipment-key="cyberparts">
+            <div class="item-info">
+              <h3 class="character-name">Cyber Parts</h3>
+              <p class="character-meta equipment-state" id="cyberparts-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_cyberparts.png"
+              alt="Cyber Parts"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-baseball-bat" data-equipment-key="baseballBat">
+            <div class="item-info">
+              <h3 class="character-name">Baseball Bat</h3>
+              <p class="character-meta equipment-state" id="baseball-bat-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_baseball_bat.png"
+              alt="Baseball Bat"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-kaisers-goggles" data-equipment-key="kaisersGoggles">
+            <div class="item-info">
+              <h3 class="character-name">Kaiser's Goggles</h3>
+              <p class="character-meta equipment-state" id="kaisers-goggles-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_kaisers_goggles.png"
+              alt="Kaiser's Goggles"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-hard-scale" data-equipment-key="hardScale">
+            <div class="item-info">
+              <h3 class="character-name">Hard Scale</h3>
+              <p class="character-meta equipment-state" id="hard-scale-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_hard_scale.png"
+              alt="Hard Scale"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-narwhal-horn" data-equipment-key="narwhalHorn">
+            <div class="item-info">
+              <h3 class="character-name">Narwhal Horn</h3>
+              <p class="character-meta equipment-state" id="narwhal-horn-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_narwhal_horn.png"
+              alt="Narwhal Horn"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-cursed-horn" data-equipment-key="cursedHorn">
+            <div class="item-info">
+              <h3 class="character-name">Cursed Horn</h3>
+              <p class="character-meta equipment-state" id="cursed-horn-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_cursed_horn.png"
+              alt="Cursed Horn"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-mighty-horn" data-equipment-key="mightyHorn">
+            <div class="item-info">
+              <h3 class="character-name">Mighty Horn</h3>
+              <p class="character-meta equipment-state" id="mighty-horn-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_mighty_horn.png"
+              alt="Mighty Horn"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-blazing-armor" data-equipment-key="blazingArmor">
+            <div class="item-info">
+              <h3 class="character-name">Blazing Armor</h3>
+              <p class="character-meta equipment-state" id="blazing-armor-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_blazing_armor.png"
+              alt="Blazing Armor"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-ancient-relic" data-equipment-key="ancientRelic">
+            <div class="item-info">
+              <h3 class="character-name">Ancient Relic</h3>
+              <p class="character-meta equipment-state" id="ancient-relic-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_ancient_relic.png"
+              alt="Ancient Relic"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-cat-gloves" data-equipment-key="catGloves">
+            <div class="item-info">
+              <h3 class="character-name">Cat Gloves</h3>
+              <p class="character-meta equipment-state" id="cat-gloves-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_cat_gloves.png"
+              alt="Cat Gloves"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-despair-claw" data-equipment-key="despairClaw">
+            <div class="item-info">
+              <h3 class="character-name">Despair Claw</h3>
+              <p class="character-meta equipment-state" id="despair-claw-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_despair_claw.png"
+              alt="Despair Claw"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-jumbo-cannon" data-equipment-key="jumboCannon">
+            <div class="item-info">
+              <h3 class="character-name">Jumbo Cannon</h3>
+              <p class="character-meta equipment-state" id="jumbo-cannon-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_jumbo_cannon.png"
+              alt="Jumbo Cannon"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-cyber-sword" data-equipment-key="cyberSword">
+            <div class="item-info">
+              <h3 class="character-name">Cyber Sword</h3>
+              <p class="character-meta equipment-state" id="cyber-sword-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_cyber_sword.png"
+              alt="Cyber Sword"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-arsenal" data-equipment-key="arsenal">
+            <div class="item-info">
+              <h3 class="character-name">Arsenal</h3>
+              <p class="character-meta equipment-state" id="arsenal-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_arsenal.png"
+              alt="Arsenal"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-ancient-tablet" data-equipment-key="ancientTablet">
+            <div class="item-info">
+              <h3 class="character-name">Ancient Tablet</h3>
+              <p class="character-meta equipment-state" id="ancient-tablet-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_ancient_tablet.png"
+              alt="Ancient Tablet"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-infinite-heads" data-equipment-key="infiniteHeads">
+            <div class="item-info">
+              <h3 class="character-name">Infinite Heads</h3>
+              <p class="character-meta equipment-state" id="infinite-heads-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_infinite_heads.png"
+              alt="Infinite Heads"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-fur-coat" data-equipment-key="furCoat">
+            <div class="item-info">
+              <h3 class="character-name">Fur Coat</h3>
+              <p class="character-meta equipment-state" id="fur-coat-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_fur_coat.png"
+              alt="Fur Coat"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-infinity-gauntlet" data-equipment-key="infinityGauntlet">
+            <div class="item-info">
+              <h3 class="character-name">Infinity Gauntlet</h3>
+              <p class="character-meta equipment-state" id="infinity-gauntlet-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_infinity_gauntlet.png"
+              alt="Infinity Gauntlet"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-shell-armor" data-equipment-key="shellArmor">
+            <div class="item-info">
+              <h3 class="character-name">Shell Armor</h3>
+              <p class="character-meta equipment-state" id="shell-armor-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_shell_armor.png"
+              alt="Shell Armor"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-garurumon-coat" data-equipment-key="garurumonCoat">
+            <div class="item-info">
+              <h3 class="character-name">Garurumon Coat</h3>
+              <p class="character-meta equipment-state" id="garurumon-coat-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_garurumon_coat.png"
+              alt="Garurumon Coat"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-gear-ring" data-equipment-key="gearRing">
+            <div class="item-info">
+              <h3 class="character-name">Gear Ring</h3>
+              <p class="character-meta equipment-state" id="gear-ring-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_gear_ring.png"
+              alt="Gear Ring"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-sacred-collar" data-equipment-key="sacredCollar">
+            <div class="item-info">
+              <h3 class="character-name">Sacred Collar</h3>
+              <p class="character-meta equipment-state" id="sacred-collar-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_sacred_collar.png"
+              alt="Sacred Collar"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-cockatrice-feather" data-equipment-key="cockatriceFeather">
+            <div class="item-info">
+              <h3 class="character-name">Cockatrice Feather</h3>
+              <p class="character-meta equipment-state" id="cockatrice-feather-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_cockatrice_feather.png"
+              alt="Cockatrice Feather"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-gaogamon-machine-gun" data-equipment-key="gaogamonMachineGun">
+            <div class="item-info">
+              <h3 class="character-name">Gaogamon Machine Gun</h3>
+              <p class="character-meta equipment-state" id="gaogamon-machine-gun-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_gaogamon_machine_gun.png"
+              alt="Gaogamon Machine Gun"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-poisoned-dagger" data-equipment-key="poisonedDagger">
+            <div class="item-info">
+              <h3 class="character-name">Poisoned Dagger</h3>
+              <p class="character-meta equipment-state" id="poisoned-dagger-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_poisoned_dagger.png"
+              alt="Poisoned Dagger"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-ninja-stars" data-equipment-key="ninjaStars">
+            <div class="item-info">
+              <h3 class="character-name">Ninja Stars</h3>
+              <p class="character-meta equipment-state" id="ninja-stars-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_ninja_stars.png"
+              alt="Ninja Stars"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-boxing-gloves" data-equipment-key="boxingGloves">
+            <div class="item-info">
+              <h3 class="character-name">Boxing Gloves</h3>
+              <p class="character-meta equipment-state" id="boxing-gloves-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_boxing_gloves.png"
+              alt="Boxing Gloves"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-chainsaw" data-equipment-key="chainsaw">
+            <div class="item-info">
+              <h3 class="character-name">Chainsaw</h3>
+              <p class="character-meta equipment-state" id="chainsaw-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_chainsaw.png"
+              alt="Chainsaw"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-metal-coat" data-equipment-key="metalCoat">
+            <div class="item-info">
+              <h3 class="character-name">Metal Coat</h3>
+              <p class="character-meta equipment-state" id="metal-coat-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_metal_coat.png"
+              alt="Metal Coat"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-stinger-cannon" data-equipment-key="stingerCannon">
+            <div class="item-info">
+              <h3 class="character-name">Stinger Cannon</h3>
+              <p class="character-meta equipment-state" id="stinger-cannon-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_stinger_cannon.png"
+              alt="Stinger Cannon"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-dark-lance" data-equipment-key="darkLance">
+            <div class="item-info">
+              <h3 class="character-name">Dark Lance</h3>
+              <p class="character-meta equipment-state" id="dark-lance-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_dark_lance.png"
+              alt="Dark Lance"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-v-dramon-horn" data-equipment-key="vDramonHorn">
+            <div class="item-info">
+              <h3 class="character-name">V-dramon Horn</h3>
+              <p class="character-meta equipment-state" id="v-dramon-horn-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_v_dramon_horn.png"
+              alt="V-dramon Horn"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-lilimon-petals" data-equipment-key="lilimonPetals">
+            <div class="item-info">
+              <h3 class="character-name">Lilimon Petals</h3>
+              <p class="character-meta equipment-state" id="lilimon-petals-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_lilimon_petals.png"
+              alt="Lilimon Petals"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-alien-pistol" data-equipment-key="alienPistol">
+            <div class="item-info">
+              <h3 class="character-name">Alien Pistol</h3>
+              <p class="character-meta equipment-state" id="alien-pistol-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_alien_pistol.png"
+              alt="Alien Pistol"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-thors-hammer" data-equipment-key="thorsHammer">
+            <div class="item-info">
+              <h3 class="character-name">Thor's Hammer</h3>
+              <p class="character-meta equipment-state" id="thors-hammer-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_thors_hammer.png"
+              alt="Thor's Hammer"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-growmon-fang" data-equipment-key="growmonFang">
+            <div class="item-info">
+              <h3 class="character-name">Growmon Fang</h3>
+              <p class="character-meta equipment-state" id="growmon-fang-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_growmon_fang.png"
+              alt="Growmon Fang"
+              class="food-sprite item-icon"
+            />
+          </button>
+          <button class="character-card hidden item-card" id="equip-hedgehog-shell" data-equipment-key="hedgehogShell">
+            <div class="item-info">
+              <h3 class="character-name">Hedgehog Shell</h3>
+              <p class="character-meta equipment-state" id="hedgehog-shell-status"></p>
+            </div>
+            <img
+              src="data/ui/equip_hedgehog_shell.png"
+              alt="Hedgehog Shell"
+              class="food-sprite item-icon"
+            />
+          </button>
+        </div>
+      </div>
+      <div class="menu-actions">
+        <button class="menu-button secondary" id="equipment-back">Back</button>
+      </div>
+    </main>
+
+    <main class="menu hidden" id="key-items-menu">
+      <h1 class="title">Key Items</h1>
+      <p class="item-hover-desc" id="key-items-desc">Hover an item to see its effect.</p>
+      <p class="select-subtitle" id="key-items-empty">No key items yet.</p>
+      <div class="select-screen">
+        <div class="select-grid" id="key-items-list"></div>
+      </div>
+      <div class="menu-actions">
+        <button class="menu-button secondary" id="key-items-back">Back</button>
+      </div>
+    </main>
+<main class="menu hidden" id="train-menu">
       <h1 class="title">Training</h1>
       <div class="train-panel">
         <div class="train-visual">
           <div class="character-sprite-frame face-right" id="train-sprite"></div>
           <div class="train-bag" id="train-bag">
             <img
-              src="data/ui/punching_bag.svg"
+              src="data/ui/punching_bag.png"
               alt="Punching bag"
               class="bag-sprite"
             />
           </div>
         </div>
         <div class="train-bar">
+          <div class="train-threshold" aria-hidden="true"></div>
           <div class="train-fill" id="train-fill"></div>
         </div>
         <p class="character-meta" id="train-status">
@@ -325,38 +725,123 @@
       </div>
     </main>
 
+    <main class="menu hidden" id="event-screen">
+      <h1 class="title" id="event-title">Event</h1>
+      <p class="zone-level-label hidden" id="event-zone-label"></p>
+      <div class="event-panel" id="event-panel">
+        <div class="event-speaker">
+          <div class="character-sprite-frame" id="event-speaker-sprite"></div>
+          <h2 class="event-speaker-name" id="event-speaker-name"></h2>
+        </div>
+        <p class="event-text" id="event-text"></p>
+      </div>
+      <div class="menu-actions" id="event-choices"></div>
+      <div class="menu-actions hidden" id="event-post-actions">
+        <div class="zone-adventure-items hidden" id="zone-event-items"></div>
+        <button class="menu-button" id="event-continue">Continue</button>
+        <button class="menu-button" id="event-feed">Usable Items</button>
+        <button class="menu-button secondary" id="event-retreat">Return Home</button>
+      </div>
+    </main>
+
     <main class="menu hidden" id="battle-screen">
-      <h1 class="title">Battle</h1>
-      <div class="battle" id="battle-field">
-        <div class="battle-fighter">
-          <div class="battle-sprite-slot" id="battle-player-sprite"></div>
-          <div class="status-icons" id="player-status-icons">
-            <img src="data/ui/status_paralyzed.svg" alt="Paralyzed" class="status-icon" id="player-status-paralyzed" />
-            <img src="data/ui/status_poisoned.svg" alt="Poisoned" class="status-icon" id="player-status-poisoned" />
-            <img src="data/ui/status_confused.svg" alt="Confused" class="status-icon" id="player-status-confused" />
-          </div>
+      <h1 class="title" id="battle-title">Battle</h1>
+      <p class="zone-level-label hidden" id="zone-level-label"></p>
+      <div class="battle-layout">
+        <div class="battle-hud">
           <div class="battle-info">
             <h2 class="battle-name" id="battle-player-name">Player</h2>
             <p class="battle-hp" id="battle-player-hp">HP: 0</p>
+            <div class="status-icons" id="player-status-icons">
+              <img src="data/ui/status_asleep.png" alt="Asleep" class="status-icon" id="player-status-asleep" />
+              <img src="data/ui/status_poisoned.png" alt="Poisoned" class="status-icon" id="player-status-poisoned" />
+              <img src="data/ui/status_confused.png" alt="Confused" class="status-icon" id="player-status-confused" />
+              <img src="data/ui/status_demoralized.png" alt="Demoralized" class="status-icon" id="player-status-demoralized" />
+              <img src="data/ui/status_silenced.png" alt="Silenced" class="status-icon" id="player-status-silenced" />
+              <img src="data/ui/status_blinded.png" alt="Blinded" class="status-icon" id="player-status-blinded" />
+              <img src="data/ui/status_inverted.png" alt="Inverted" class="status-icon" id="player-status-inverted" />
+              <img src="data/ui/status_burned.png" alt="Burned" class="status-icon" id="player-status-burned" />
+              <img src="data/ui/buff_vampirism.png" alt="Vampirism" class="status-icon" id="player-status-vampirism" />
+              <img src="data/ui/buff_thorns.png" alt="Thorns" class="status-icon" id="player-status-thorns" />
+              <img src="data/ui/buff_reflector.png" alt="Reflector" class="status-icon" id="player-status-reflector" />
+              <img src="data/ui/buff_immune.png" alt="Immune" class="status-icon" id="player-status-immune" />
+              <img src="data/ui/buff_reckless.png" alt="Reckless" class="status-icon" id="player-status-reckless" />
+              <img src="data/ui/buff_positivepole.png" alt="Positive Pole" class="status-icon" id="player-status-positivepole" />
+              <img src="data/ui/debuff_cursed.png" alt="Cursed" class="status-icon" id="player-status-cursed" />
+              <img src="data/ui/debuff_marked.png" alt="Marked" class="status-icon" id="player-status-marked" />
+              <img src="data/ui/debuff_drained.png" alt="Drained" class="status-icon" id="player-status-drained" />
+              <img src="data/ui/debuff_bound.png" alt="Bound" class="status-icon" id="player-status-bound" />
+              <img src="data/ui/debuff_negativepole.png" alt="Negative Pole" class="status-icon" id="player-status-negativepole" />
+              <img src="data/ui/debuff_deepwound.png" alt="Deep Wound" class="status-icon" id="player-status-deepwound" />
+              <img src="data/ui/debuff_infatuated.png" alt="Infatuated" class="status-icon" id="player-status-infatuated" />
+              <img src="data/ui/status_fortified.png" alt="Fortified" class="status-icon" id="player-status-fortified" />
+              <img src="data/ui/status_protected.png" alt="Protected" class="status-icon" id="player-status-protected" />
+              <img src="data/ui/status_swift.png" alt="Swift" class="status-icon" id="player-status-swift" />
+              <img src="data/ui/status_focused.png" alt="Focused" class="status-icon" id="player-status-focused" />
+              <img src="data/ui/status_weak.png" alt="Weak" class="status-icon" id="player-status-weak" />
+              <img src="data/ui/status_exposed.png" alt="Exposed" class="status-icon" id="player-status-exposed" />
+              <img src="data/ui/status_slow.png" alt="Slow" class="status-icon" id="player-status-slow" />
+              <img src="data/ui/status_distracted.png" alt="Distracted" class="status-icon" id="player-status-distracted" />
+            </div>
           </div>
-        </div>
-        <div class="battle-vs">VS</div>
-        <div class="battle-fighter">
-          <div class="battle-sprite-slot" id="battle-opponent-sprite"></div>
-          <div class="status-icons" id="opponent-status-icons">
-            <img src="data/ui/status_paralyzed.svg" alt="Paralyzed" class="status-icon" id="opponent-status-paralyzed" />
-            <img src="data/ui/status_poisoned.svg" alt="Poisoned" class="status-icon" id="opponent-status-poisoned" />
-            <img src="data/ui/status_confused.svg" alt="Confused" class="status-icon" id="opponent-status-confused" />
-          </div>
+          <div class="battle-vs">VS</div>
           <div class="battle-info">
             <h2 class="battle-name" id="battle-opponent-name">Opponent</h2>
             <p class="battle-hp" id="battle-opponent-hp">HP: 0</p>
+            <div class="status-icons" id="opponent-status-icons">
+              <img src="data/ui/status_asleep.png" alt="Asleep" class="status-icon" id="opponent-status-asleep" />
+              <img src="data/ui/status_poisoned.png" alt="Poisoned" class="status-icon" id="opponent-status-poisoned" />
+              <img src="data/ui/status_confused.png" alt="Confused" class="status-icon" id="opponent-status-confused" />
+              <img src="data/ui/status_demoralized.png" alt="Demoralized" class="status-icon" id="opponent-status-demoralized" />
+              <img src="data/ui/status_silenced.png" alt="Silenced" class="status-icon" id="opponent-status-silenced" />
+              <img src="data/ui/status_blinded.png" alt="Blinded" class="status-icon" id="opponent-status-blinded" />
+              <img src="data/ui/status_inverted.png" alt="Inverted" class="status-icon" id="opponent-status-inverted" />
+              <img src="data/ui/status_burned.png" alt="Burned" class="status-icon" id="opponent-status-burned" />
+              <img src="data/ui/buff_vampirism.png" alt="Vampirism" class="status-icon" id="opponent-status-vampirism" />
+              <img src="data/ui/buff_thorns.png" alt="Thorns" class="status-icon" id="opponent-status-thorns" />
+              <img src="data/ui/buff_reflector.png" alt="Reflector" class="status-icon" id="opponent-status-reflector" />
+              <img src="data/ui/buff_immune.png" alt="Immune" class="status-icon" id="opponent-status-immune" />
+              <img src="data/ui/buff_reckless.png" alt="Reckless" class="status-icon" id="opponent-status-reckless" />
+              <img src="data/ui/buff_positivepole.png" alt="Positive Pole" class="status-icon" id="opponent-status-positivepole" />
+              <img src="data/ui/debuff_cursed.png" alt="Cursed" class="status-icon" id="opponent-status-cursed" />
+              <img src="data/ui/debuff_marked.png" alt="Marked" class="status-icon" id="opponent-status-marked" />
+              <img src="data/ui/debuff_drained.png" alt="Drained" class="status-icon" id="opponent-status-drained" />
+              <img src="data/ui/debuff_bound.png" alt="Bound" class="status-icon" id="opponent-status-bound" />
+              <img src="data/ui/debuff_negativepole.png" alt="Negative Pole" class="status-icon" id="opponent-status-negativepole" />
+              <img src="data/ui/debuff_deepwound.png" alt="Deep Wound" class="status-icon" id="opponent-status-deepwound" />
+              <img src="data/ui/debuff_infatuated.png" alt="Infatuated" class="status-icon" id="opponent-status-infatuated" />
+              <img src="data/ui/status_fortified.png" alt="Fortified" class="status-icon" id="opponent-status-fortified" />
+              <img src="data/ui/status_protected.png" alt="Protected" class="status-icon" id="opponent-status-protected" />
+              <img src="data/ui/status_swift.png" alt="Swift" class="status-icon" id="opponent-status-swift" />
+              <img src="data/ui/status_focused.png" alt="Focused" class="status-icon" id="opponent-status-focused" />
+              <img src="data/ui/status_weak.png" alt="Weak" class="status-icon" id="opponent-status-weak" />
+              <img src="data/ui/status_exposed.png" alt="Exposed" class="status-icon" id="opponent-status-exposed" />
+              <img src="data/ui/status_slow.png" alt="Slow" class="status-icon" id="opponent-status-slow" />
+              <img src="data/ui/status_distracted.png" alt="Distracted" class="status-icon" id="opponent-status-distracted" />
+            </div>
+          </div>
+        </div>
+        <div class="battle" id="battle-field">
+          <div class="battle-fighter">
+            <div class="battle-sprite-slot" id="battle-player-sprite"></div>
+          </div>
+          <div class="battle-fighter">
+            <div class="battle-sprite-slot" id="battle-opponent-sprite"></div>
           </div>
         </div>
       </div>
       <div class="battle-log" id="battle-log"></div>
-      <div class="menu-actions">
+      <button type="button" class="menu-button secondary fast-combat-button" id="fast-combat" aria-pressed="false">
+        Fast Combat
+      </button>
+      <div class="menu-actions" id="battle-default-actions">
         <button class="menu-button secondary" id="battle-back">Back to Menu</button>
+      </div>
+      <div class="menu-actions hidden" id="zone-post-battle-actions">
+        <div class="zone-adventure-items hidden" id="zone-battle-items"></div>
+        <button class="menu-button" id="zone-continue">Continue</button>
+        <button class="menu-button hidden" id="zone-feed">Usable Items</button>
+        <button class="menu-button secondary" id="zone-retreat">Return Home</button>
       </div>
     </main>
 
@@ -377,7 +862,7 @@
     <div class="modal-overlay hidden" id="action-back-modal" role="dialog" aria-modal="true" aria-labelledby="action-back-title">
       <div class="modal-card final-challenge-popup">
         <p class="modal-eyebrow">Warning</p>
-        <h2 class="modal-title" id="action-back-title">Leave Caretaker</h2>
+        <h2 class="modal-title" id="action-back-title">Leave Town</h2>
         <p class="modal-message">
           Going back to the main menu resets your current run progress. Continue?
         </p>
@@ -387,6 +872,33 @@
         </div>
       </div>
     </div>
+
+    <div class="modal-overlay hidden" id="end-run-modal" role="dialog" aria-modal="true" aria-labelledby="end-run-title">
+      <div class="modal-card final-challenge-popup">
+        <p class="modal-eyebrow">Notice</p>
+        <h2 class="modal-title" id="end-run-title">Run Complete</h2>
+        <p class="modal-message" id="end-run-message">
+          This zone run has ended.
+        </p>
+        <div class="menu-actions modal-actions">
+          <button class="menu-button" id="end-run-confirm">Return Home</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-overlay hidden" id="drop-modal" role="dialog" aria-modal="true" aria-labelledby="drop-modal-title">
+      <div class="modal-card drop-popup">
+        <p class="modal-eyebrow">Loot</p>
+        <h2 class="modal-title" id="drop-modal-title">Item Found!</h2>
+        <p class="modal-message" id="drop-modal-message">The enemy dropped an item.</p>
+        <div class="drop-modal-list" id="drop-modal-list"></div>
+        <div class="menu-actions modal-actions">
+          <button class="menu-button" id="drop-modal-confirm">OK</button>
+        </div>
+      </div>
+    </div>
+    <div id="zone-scene-fade" class="zone-scene-fade" aria-hidden="true"></div>
+    <div id="item-hover-tooltip" class="item-hover-tooltip hidden" role="tooltip"></div>
     <script type="module" src="src/js/game.js"></script>
   </body>
 </html>
+
