@@ -5792,27 +5792,29 @@ function stopTraining() {
   }
 }
 
-window.addEventListener("keydown", (event) => {
-  if (event.code !== "Space") {
-    return;
-  }
+function handleTrainingHit() {
   if (trainMenu.classList.contains("hidden") || !trainActive) {
     return;
   }
-  event.preventDefault();
+  
   trainActive = false;
   stopTraining();
+  
   let win = trainProgress >= 80 && trainProgress <= 100;
   let usedAutoSave = false;
+  
   if (!win && state.trainingAutoSuccessCharges > 0) {
     state.trainingAutoSuccessCharges -= 1;
     win = true;
     usedAutoSave = true;
     updateEquipmentStatus();
   }
+  
   playTrainingResult(win);
+  
   const trainGain = getTrainingStatGain();
   const trainCountGain = getTrainingCountGain();
+  
   if (win) {
     state.training += trainCountGain;
     if (trainGain > 0) {
@@ -5824,6 +5826,7 @@ window.addEventListener("keydown", (event) => {
     updateWeight();
     updateAttributes();
   }
+  
   if (usedAutoSave) {
     trainStatus.textContent = `Saved by Ration Pack! All combat stats +${trainGain} (${getHomeTrainBoost()}/${HOME_TRAIN_BOOST_MAX}).`;
   } else {
@@ -5831,9 +5834,25 @@ window.addEventListener("keydown", (event) => {
       ? `Success! Attack, Defense, Speed and Intelligence +${trainGain} (${getHomeTrainBoost()}/${HOME_TRAIN_BOOST_MAX}).`
       : "Missed! Try again.";
   }
+  
   updateTrainAvailability();
+}
+
+window.addEventListener("keydown", (event) => {
+  if (event.code !== "Space") {
+    return;
+  }
+  event.preventDefault();
+  handleTrainingHit();
 });
 
+const trainActionBtn = document.getElementById("train-action-btn");
+if (trainActionBtn) {
+  trainActionBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    handleTrainingHit();
+  });
+}
 function renderTrainingSprite() {
   if (!state.player || !trainSpriteSlot) {
     return;

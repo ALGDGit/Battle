@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Web Game</title>
+    <title>Digilite</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,7 +14,7 @@
   </head>
   <body>
     <main class="menu" id="main-menu">
-      <h1 class="title">Web Game</h1>
+      <h1 class="title">Digilite</h1>
       <div class="menu-actions">
         <button class="menu-button" id="single-player">History Mode</button>
         <button class="menu-button" id="arena-mode" disabled title="Coming soon!">Arena Mode — Coming soon!</button>
@@ -666,7 +666,7 @@
         <button class="menu-button secondary" id="key-items-back">Back</button>
       </div>
     </main>
-<main class="menu hidden" id="train-menu">
+    <main class="menu hidden" id="train-menu">
       <h1 class="title">Training</h1>
       <div class="train-panel">
         <div class="train-visual">
@@ -683,8 +683,11 @@
           <div class="train-threshold" aria-hidden="true"></div>
           <div class="train-fill" id="train-fill"></div>
         </div>
+        
+        <button class="menu-button" id="train-action-btn" style="margin: 15px auto 5px auto; width: 100%; font-size: 1.2rem; padding: 12px;">HIT!</button>
+    
         <p class="character-meta" id="train-status">
-          Press Space when the bar is between 80% and 100%.
+          Press Space or tap the button when the bar is between 80% and 100%.
         </p>
       </div>
       <div class="menu-actions">
